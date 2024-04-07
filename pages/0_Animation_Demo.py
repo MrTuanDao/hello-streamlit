@@ -70,8 +70,8 @@ def animation_demo() -> None:
     st.button("Re-run")
 
 
-st.set_page_config(page_title="Animation Demo", page_icon="📹")
-st.markdown("# Animation Demo")
+st.set_page_config(page_title="Animation Demoooo", page_icon="📹")
+st.markdown("# Animation Demoooo")
 st.sidebar.header("Animation Demo")
 st.write(
     """This app shows how you can use Streamlit to build cool animations.
