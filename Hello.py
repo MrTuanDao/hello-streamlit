@@ -7,23 +7,27 @@ from torchvision import models
 from torchvision import transforms
 from PIL import Image
 import torch.nn.functional as F
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+
+mean = [0.485, 0.456, 0.406]
+std = [0.229, 0.224, 0.225]
 
 # Kiểm tra xem có GPU có sẵn không và đặt PyTorch sử dụng GPU nếu có
 device = 'cpu'
 
 # Load mô hình ResNet pre-trained
-resnet = models.resnet18()
+model = models.resnet18()
 
 # Thay thế lớp cuối cùng
-num_ftrs = resnet.fc.in_features
-resnet.fc = nn.Linear(num_ftrs, 10)
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, 10)
 
 # Chuyển mô hình đến GPU nếu có sẵn
-resnet = resnet.to(device)
+model = model.to(device)
 
-resnet.load_state_dict(torch.load('model_weights.pth', map_location=torch.device('cpu')))
-
-model = resnet
+model.load_state_dict(torch.load('model_weights.pth', map_location=torch.device('cpu')))
 
 # Định nghĩa các biến đổi
 transform = transforms.Compose([
@@ -64,10 +68,17 @@ if uploaded_file is not None:
     # Áp dụng softmax để chuyển đổi đầu ra thành xác suất
     probabilities = F.softmax(output, dim=1)
     
+    st.write(output)
+
+    img = input_tensor.cpu().numpy().transpose((1, 2, 0))
+    img = std * img + mean  # unnormalize
+    img = np.clip(img, 0, 1)
+    plt.imshow(img)
+    plt.show()
     with col2:
         # for i in range(10):
         #     text = f'{classes[i]}: {probabilities[0][i].item()*100:.2f}%'
         #     st.progress(probabilities[0][i].item(), text=text)
             # st.write(classes[i], ':', "{:.2f}%".format(probabilities[0][i].item()*100))
-        
+        time.sleep(1)
         st.write('# Predicted:', classes[torch.argmax(probabilities, dim=1)], 'VND')
