@@ -65,16 +65,21 @@ if uploaded_file is not None:
     with torch.no_grad():
         output = model(input_batch)
 
+    # Print weights of the first layer
+    first_layer_weights = next(model.parameters()).data
+    # st.write(first_layer_weights.shape)
+    # st.write(first_layer_weights)
+    
     # Áp dụng softmax để chuyển đổi đầu ra thành xác suất
     probabilities = F.softmax(output, dim=1)
     
-    st.write(output)
+    # st.write(output)
 
-    img = input_tensor.cpu().numpy().transpose((1, 2, 0))
-    img = std * img + mean  # unnormalize
-    img = np.clip(img, 0, 1)
-    plt.imshow(img)
-    plt.show()
+    # img = input_tensor.cpu().numpy().transpose((1, 2, 0))
+    # img = std * img + mean  # unnormalize
+    # img = np.clip(img, 0, 1)
+    # plt.imshow(img)
+    # st.pyplot(plt)
     with col2:
         # for i in range(10):
         #     text = f'{classes[i]}: {probabilities[0][i].item()*100:.2f}%'
