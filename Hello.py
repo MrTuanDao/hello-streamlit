@@ -66,4 +66,6 @@ if uploaded_file is not None:
     
     with col2:
         for i in range(10):
-            st.write(classes[i], ':', "{:.2f}%".format(probabilities[0][i].item()*100))
+            text = f'{classes[i]}: {probabilities[0][i].item()*100:.2f}%'
+            st.progress(probabilities[0][i].item(), text=text)
+            # st.write(classes[i], ':', "{:.2f}%".format(probabilities[0][i].item()*100))
