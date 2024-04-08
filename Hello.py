@@ -32,7 +32,7 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Chuẩn hóa ảnh
 ])
 
-classes = ['VND146.000', 'VND195.000', 'VND244.000', 'VND293.000', 'VND391.000', 'VND489.000', 'VND588.000', 'VND686.000', 'VND784.000', 'VND980.000']
+classes = ['146.000', '195.000', '244.000', '293.000', '391.000', '489.000', '588.000', '686.000', '784.000', '980.000']
 
 col1, col2 = st.columns(2)
 
@@ -70,4 +70,4 @@ if uploaded_file is not None:
         #     st.progress(probabilities[0][i].item(), text=text)
             # st.write(classes[i], ':', "{:.2f}%".format(probabilities[0][i].item()*100))
         
-        st.write('# Predicted:', classes[torch.argmax(probabilities, dim=1)])
+        st.write('# Predicted:', classes[torch.argmax(probabilities, dim=1)], 'VND')
