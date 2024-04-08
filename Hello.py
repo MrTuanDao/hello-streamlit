@@ -65,7 +65,9 @@ if uploaded_file is not None:
     probabilities = F.softmax(output, dim=1)
     
     with col2:
-        for i in range(10):
-            text = f'{classes[i]}: {probabilities[0][i].item()*100:.2f}%'
-            st.progress(probabilities[0][i].item(), text=text)
+        # for i in range(10):
+        #     text = f'{classes[i]}: {probabilities[0][i].item()*100:.2f}%'
+        #     st.progress(probabilities[0][i].item(), text=text)
             # st.write(classes[i], ':', "{:.2f}%".format(probabilities[0][i].item()*100))
+        
+        st.write('# Predicted:', classes[torch.argmax(probabilities, dim=1)])
